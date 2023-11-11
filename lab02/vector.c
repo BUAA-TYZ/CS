@@ -113,17 +113,15 @@ void vector_set(vector_t *v, size_t loc, int value) {
     if (loc < v->size) {
         v->data[loc] = value;
     } else {
-        int i = 0;
         int *new_data = malloc(sizeof(int) * (loc + 1));
         if (new_data == NULL) {
             vector_delete(v);
             allocation_failed();
         }
-        for ( ; i < v->size; i++) 
-            new_data[i] = v->data[i];
-        for ( ; i < loc; i++) 
-            new_data[i] = 0;
-        new_data[i] = value;
+        memcpy(new_data, v->data, sizeof(int) * v->size);
+        // memset((void *)new_data + sizeof(int) * v->size, 0, sizeof(int) * (loc - v->size));
+        memset(new_data + v->size, 0, sizeof(int) * (loc - v->size));
+        new_data[loc] = value;
         free(v->data);
         v->data = new_data;
         v->size = loc + 1;

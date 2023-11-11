@@ -31,6 +31,7 @@
  */
 
 #include <sys/types.h>
+#include <string.h>
 
 typedef struct vector_t vector_t;
 
