@@ -24,7 +24,7 @@ loop:
     beq t0, a1, end
     slli t1, t0, 2
     add t1, t1, a0
-    sw t1, 0(t1)
+    lw t1, 0(t1)
     ble t1, t2, skip
     mv t2, t1
     mv t3, t0

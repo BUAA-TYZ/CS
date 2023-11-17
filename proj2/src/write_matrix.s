@@ -56,9 +56,14 @@ write_matrix:
     mv a2, a0
     li a3, 2
     li a4, 4
+    addi sp, sp, -4
+    sw a0, 0(sp)
     jal fwrite
     li a3, 2
     blt a0, a3, fwrite_error
+    lw a0, 0(sp)
+    addi sp, sp, 4
+    jal free
     
     # write matrix
     mv a1, s4
