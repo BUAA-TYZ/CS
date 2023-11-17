@@ -63,7 +63,7 @@ class TestRelu(TestCase):
 
 
 class TestArgmax(TestCase):
-    def test_simple(self):
+    def test_simple1(self):
         t = AssemblyTest(self, "argmax.s")
         # create an array in the data section
         array0 = t.array([1, -2, 3, -4, 5, -6, 7, -8, 9])
@@ -77,6 +77,21 @@ class TestArgmax(TestCase):
         t.check_scalar("a0", 8)
         # generate the `assembly/TestArgmax_test_simple.s` file and run it through venus
         t.execute()
+    def test_simple2(self):
+        t = AssemblyTest(self, "argmax.s")
+        # create an array in the data section
+        array0 = t.array([-34, 884, -1076, 74, 394])
+        # load address of the array into register a0
+        t.input_array("a0", array0)
+        # set a1 to the length of the array
+        t.input_scalar("a1", len(array0))
+        # call the `argmax` function
+        t.call("argmax")
+        # check that the register a0 contains the correct output
+        t.check_scalar("a0", 1)
+        # generate the `assembly/TestArgmax_test_simple.s` file and run it through venus
+        t.execute()
+    
     def test_exception(self):
         t = AssemblyTest(self, "argmax.s")
         array0 = t.array([])
@@ -245,16 +260,19 @@ class TestReadMatrix(TestCase):
         # allocate space to hold the rows and cols output parameters
         rows = t.array([-1])
         cols = t.array([-1])
+        
 
         # load the addresses to the output parameters into the argument registers
-        raise NotImplementedError("TODO")
-        # TODO
+        t.input_array("a1", rows)
+        t.input_array("a2", cols)
 
         # call the read_matrix function
         t.call("read_matrix")
 
         # check the output from the function
-        # TODO
+        t.check_array(rows, [3])
+        t.check_array(cols, [3])
+       
 
         # generate assembly and run it through venus
         t.execute(fail=fail, code=code)
@@ -275,8 +293,10 @@ class TestWriteMatrix(TestCase):
         # load output file name into a0 register
         t.input_write_filename("a0", outfile)
         # load input array and other arguments
-        raise NotImplementedError("TODO")
-        # TODO
+        array0 = t.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        t.input_array("a1", array0)
+        t.input_scalar("a2", 3)
+        t.input_scalar("a3", 3)
         # call `write_matrix` function
         t.call("write_matrix")
         # generate assembly and run it through venus
@@ -316,9 +336,9 @@ class TestClassify(TestCase):
         t.execute(args=args)
 
         # compare the output file and
-        raise NotImplementedError("TODO")
-        # TODO
+        t.check_file_output(out_file, ref_file)
         # compare the classification output with `check_stdout`
+        t.check_stdout("0")
 
     @classmethod
     def tearDownClass(cls):
