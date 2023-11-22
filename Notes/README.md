@@ -81,7 +81,7 @@ READ P&H 4.5 4.6 4.7 4.8 4.10
     - 最直观的理解了分支预测，以前尽管知道有分支预测，但一直不知道为什么要分支预测
 - 4.6: 为此需要更改 datapath, 在每个步骤间添加了一个寄存器来存储中间状态，还更改了控制信号逻辑
 - 4.7: 正式介绍 data hazard 的 data path
-  - ![](Ref\1.png)
+  - ![](Ref/1.png)
   - 对于一个 ALU，它的 input 需要从 register file 的数据和 EX/MEM 或 MEM/WB 寄存器中选择，所以我们再次需要 multiplexor
   - 对于一个 load 后接一个 R 类操作，forward 也解决不了，此时只能 stall。所以我们额外还需要一个 hazard detection unit 来及时停止某些指令
 - 4.8: 正式介绍 control hazard 的 data path
