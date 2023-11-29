@@ -1,5 +1,10 @@
 # CS61C
 
+### Background
+
+- 在学这门课之前已经学习过 OS, C的知识，所以学习这门课瞄准的更多的是更底层的知识，比如 proj2 的汇编，proj3 的搭建一个二级流水线 CPU。
+- 例如 proj1, proj4 里都是比较简单的c就能完成，就直接跳过了
+
 ### Lab 01
 
 - `scp <source> <destination>`
