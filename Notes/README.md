@@ -164,7 +164,7 @@ READ P&H 5.7
   - **可以看到我们挑选两种层次的时候，我们使用的是不同的地址解释**。在高速缓存与内存间，我们使用 Block 为单位，不论是高速缓存还是内存都视为 Block 的集合。而此时，我们将 内存 与 磁盘都视为 page 的集合
     - 一个 64 位地址，归根结底，也只是 64 个 bit。但**我们可以根据不同的解释来形成不同的理解**。
 
-
+---
 
 #### LEC 28 OS
 
@@ -172,13 +172,60 @@ READ P&H 5.7
 - 介绍了操作系统的很多概念，包括上下文切换、中断等等
 - 因为之前早已学过，所以快速听了一遍，宏观上的认知更加清晰了。也只会花费十分钟这样子
 
+#### LEC 29-30 Virtual Memory
 
+- 太老生常谈了，参见 CSAPP 对应部分
 
+#### LEC 31 IO
 
+- 介绍了 IO 的基本概念，IO设备有一个统一的接口
+- IO轮询和中断
+- **DMA**: 将主存与磁盘间的数据转移交给别的硬件，CPU 去执行别的指令，DMA 执行完后中断来通知 CPU
 
+---
 
+#### LEC 32 Parllelism
 
+- 介绍了几种模式，其中最常见的是 SIMD, MIMD
+- 重点讲解了 SIMD，即一条指令多个 PU 来执行，属于 Data-Level Parallelism
+- Intel 的 SIMD: MMX(MultiMedia Extension), SSE(Streaming SIMD Extension) 等等
+- 这些额外的指令集越来越庞大，也要保存越来越多的状态
+- 所以我们需要更多的 New and Wider Registers
+- 在例子中可以看到，我们的每一个指令都操作更多的位数。比如 _mm_mul_pd(a, b)，a 和 b 都向量化了，每个都代表了两个值。所以这条指令的操作并行的使用了数据
 
+#### LEC 33 Thread-Level Parallelism I
 
+- 我们已经在这门课中学过的并行方式
+  - Instruction-Level Parallelism: Pipeline
+  - Parallel data: SIMD
+  - Parallel Hardware: 32 bit AND GATE
+- Multiprocessor Execution Model
+  - Separate resources
+    - Datapath(Register, PC, ALU)
+    - L1, L2 Cache
+  - Shared resources
+    - Memory
+    - L3 Cache
+- 从大约 2005 年开始，单核的频率基本已经停步不前。人们转而开始增加 CPU 核数来提升性能
+- Thread 就是一个指令流。通过 time sharing，似乎每个 Thread 都在同时执行
+- 经典的 N-to-M 模型，N个软件线程对应M个核数的线程
+- 超线程模拟出更多的 Logical CPUs
 
+#### LEC 34 Thread-Level Parallelism II
 
+- Open MP: C extension, offer us multi-threaded, shared-memory parallelism
+- 几个例子讲解了 OpenMp 的使用
+
+#### LEC 35 Thread-Level Parallelism III
+
+- Cache consistency
+
+- false sharing: 第四种类型的 Cache Miss
+
+  - 两个 CPU 同时想获取在一个缓存行上的 data。两个只有一个会成功。
+
+  - 课堂上提到可以使用更小的 cache block size 来解决
+
+  - 还可以通过填充空字段使数据不在一个缓存行上
+
+    - 但是一方面依赖提前知道硬件的信息，另一方面浪费了缓存。
