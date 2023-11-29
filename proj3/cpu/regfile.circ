@@ -524,7 +524,7 @@
       <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(1820,790)" name="Tunnel">
-      <a name="label" val="Reg117Read"/>
+      <a name="label" val="Reg17Read"/>
       <a name="width" val="32"/>
     </comp>
     <comp lib="0" loc="(1820,950)" name="Tunnel">
